@@ -1,0 +1,92 @@
+# ========================================
+# OS-specific ignores
+# ========================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ========================================
+# IDEs and editors
+# ========================================
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# VSCode
+.vscode/
+
+# ========================================
+# Java / Spring / Spring Boot
+# ========================================
+
+# Build output
+**/target/
+**/bin/
+**/build/
+
+# Logs
+**/*.log
+**/logs/
+
+# Dependency directories
+**/.classpath
+**/.project
+**/.settings/
+
+# Local environment configs
+**/application-local.yml
+**/application-local.properties
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+
+# Maven
+.mvn/
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+**/buildNumber.properties
+
+# ========================================
+# MySQL
+# ========================================
+
+# MySQL dump or temp files
+*.sql
+*.sql.gz
+*.dump
+
+# ========================================
+# Others
+# ========================================
+
+# Logs and temp files
+*.tmp
+*.swp
+*.swo
+
+# System-specific
+.env
+.env.*
+!.env.sample
+
+# JetBrains Rider
+.idea/
