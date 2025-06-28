@@ -15,21 +15,21 @@ public class ProjectsController {
 
     @GetMapping(value = "/projects")
     public ResponseEntity<?> getProjectsHome(
-            @RequestParam String section
+            @RequestParam("section") String section
     ){
         return projectsService.getProjectsBySection(section);
     }
 
     @GetMapping(value = "/projects/history")
     public ResponseEntity<?> getProjectsHistory(
-            @RequestParam int cursor, @RequestParam int limit
+            @RequestParam("cursor") int cursor, @RequestParam("limit") int limit
     ){
         return projectsService.getProjectsHistory(cursor, limit);
     }
 
     @GetMapping(value = "/projects/{id}")
     public ResponseEntity<?> getProjectsDetail(
-            @PathVariable long id
+            @PathVariable("id") long id
     ){
         return projectsService.getProjectDetail(id);
     }
@@ -43,7 +43,7 @@ public class ProjectsController {
 
     @PatchMapping(value = "/manage/project/newpost/{id}")
     public ResponseEntity<?> updateProject(
-            @PathVariable long id,
+            @PathVariable("id") long id,
             @RequestBody ProjectUpdateRequestDTO dto
     ){
         return projectsService.updateProject(id, dto);
@@ -51,7 +51,7 @@ public class ProjectsController {
 
     @DeleteMapping(value = "/manage/project/{id}/delete")
     public ResponseEntity<?> deleteProject(
-            @PathVariable long id
+            @PathVariable("id") long id
     ){
         return projectsService.deleteProject(id);
     }

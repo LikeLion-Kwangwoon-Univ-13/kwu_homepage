@@ -15,7 +15,7 @@ public class MembersController {
 
     @GetMapping(value = "/members/{generation}")
     public ResponseEntity<?> getMembersByGeneration(
-            @PathVariable int generation
+            @PathVariable("generation") int generation
     ){
         return membersService.getMembersByGeneration(generation);
     }
@@ -29,7 +29,7 @@ public class MembersController {
 
     @PatchMapping(value = "/manage/members/newpost/{id}")
     public ResponseEntity<?> updateMember(
-            @PathVariable long id,
+            @PathVariable("id") long id,
             @RequestBody MemberUpdateRequestDTO dto
     ){
         return membersService.updateMember(id, dto);
@@ -37,7 +37,7 @@ public class MembersController {
 
     @DeleteMapping(value = "/manage/members/{id}/delete")
     public ResponseEntity<?> deleteMember(
-            @PathVariable long id
+            @PathVariable("id") long id
     ){
         return membersService.deleteMember(id);
     }

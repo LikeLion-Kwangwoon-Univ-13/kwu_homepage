@@ -22,7 +22,7 @@ public class GenerationController {
     // generation 삭제
     @DeleteMapping(value = "/{id}/delete")
     public ResponseEntity<?> deleteGeneration(
-            @PathVariable long id
+            @PathVariable("id") long id
     ){
         return generationService.deleteGeneration(id);
     }
