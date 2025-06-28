@@ -14,7 +14,7 @@ public class RecruitRequestDtoToRecruitConverter {
                 .interviewDate(dto.getInterviewDate())
                 .acceptDate(dto.getAcceptDate())
                 .otDate(dto.getOtDate())
-                .isDeleted(0)  // 기본값
+                .isDeleted(false)  // 기본값
                 .build();
     }
 }

@@ -8,6 +8,8 @@ import com.example.homepage.recruit.entity.Recruit;
 import com.example.homepage.recruit.repository.RecruitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +20,23 @@ public class RecruitServiceImpl implements RecruitService {
     private final RecruitToRecruitResponseDtoConverter responseConverter;
 
     @Override
+    // 1번 id 값이 아닌 가장 작은 id 값으로 데이터 가져옴
     public RecruitResponseDTO getRecruit() {
-        Recruit recruit = recruitRepository.findById(1)
-                .orElseThrow(() -> new RuntimeException("리쿠르트 오류 발생"));
+        Recruit recruit = recruitRepository.findFirstByOrderByIdAsc()
+                .orElseThrow(() -> new IllegalStateException("Recruit 데이터가 없습니다."));
         return responseConverter.convert(recruit);
     }
 
     @Override
+    // 동시성 처리 문제 해결
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void createRecruit(RecruitRequestDTO dto) {
+        // 처음만 생성 가능
+        long totalCount = recruitRepository.count();
+        if (totalCount != 0) {
+            throw new IllegalStateException("Recruit 데이터는 하나만 생성할 수 있습니다.");
+        }
+
         Recruit recruit = requestConverter.convert(dto);
         recruitRepository.save(recruit);
     }
@@ -33,7 +44,7 @@ public class RecruitServiceImpl implements RecruitService {
     @Override
     public void updateRecruit(Integer id, RecruitRequestDTO dto) {
         Recruit recruit = recruitRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("리쿠르트 오류 발생"));
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 모집 일정이 존재하지 않습니다."));
         recruit.update(dto);
         recruitRepository.save(recruit);
     }

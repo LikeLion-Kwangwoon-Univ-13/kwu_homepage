@@ -34,8 +34,10 @@ public class Recruit {
     private LocalDate acceptDate;
     // OT 날짜
     private LocalDate otDate;
+
     // 취소 여부
-    private Integer isDeleted;
+    // Integer -> boolean 변경
+    private boolean isDeleted;
 
     public void update(RecruitRequestDTO dto) {
         this.url = dto.getUrl();
