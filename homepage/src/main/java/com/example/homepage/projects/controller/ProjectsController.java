@@ -4,6 +4,7 @@ import com.example.homepage.projects.dto.ProjectCreateRequestDTO;
 import com.example.homepage.projects.dto.ProjectUpdateRequestDTO;
 import com.example.homepage.projects.service.ProjectsService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +50,7 @@ public class ProjectsController {
         return projectsService.updateProject(id, dto);
     }
 
-    @DeleteMapping("/manage/project/{id}/delete")
+    @DeleteMapping(value = "/manage/project/{id}/delete")
     public ResponseEntity<?> deleteProject(
             @PathVariable long id
     ){

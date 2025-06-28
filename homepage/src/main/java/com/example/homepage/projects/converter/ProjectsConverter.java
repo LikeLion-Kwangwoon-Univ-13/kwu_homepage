@@ -66,8 +66,8 @@ public class ProjectsConverter {
         Map<String, String> members = project.getProjectMembers().stream()
                 .collect(Collectors.toMap(
                         m -> m.getMember().getName(),
-                        m -> m.getMember().getPosition(),
-                        (v1, v2) -> v1 // 중복 이름 처리
+                        m -> m.getMember().getPart(),
+                        (v1, v2) -> v1
                 ));
 
         List<String> stacks = project.getProjectStacks().stream()

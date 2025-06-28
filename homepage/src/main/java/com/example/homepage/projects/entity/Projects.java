@@ -3,6 +3,7 @@ package com.example.homepage.projects.entity;
 import com.example.homepage.projectclassifications.entity.ProjectClassifications;
 import com.example.homepage.projectimage.entity.ProjectImage;
 import com.example.homepage.projectmembers.entity.ProjectMembers;
+import com.example.homepage.projects.dto.ProjectUpdateRequestDTO;
 import com.example.homepage.projectstacks.entity.ProjectStacks;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,4 +44,14 @@ public class Projects {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectClassifications> projectClassifications;
+
+    public void updateFromDto(ProjectUpdateRequestDTO dto) {
+        if (dto.getTitle() != null) this.title = dto.getTitle();
+        if (dto.getLine_introduction() != null) this.line_introduction = dto.getLine_introduction();
+        if (dto.getIntroduction() != null) this.introduction = dto.getIntroduction();
+        if (dto.getPart() != null) this.part = dto.getPart();
+        if (dto.getStart_Date() != null) this.start_date = dto.getStart_Date();
+        if (dto.getEnd_Date() != null) this.end_date = dto.getEnd_Date();
+    }
+
 }

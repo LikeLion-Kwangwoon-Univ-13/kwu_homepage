@@ -106,7 +106,7 @@ public class ProjectsServiceImpl implements ProjectsService {
     public ResponseEntity<?> updateProject(long id, ProjectUpdateRequestDTO dto) {
         Projects project = projectsRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("해당 정보를 찾을 수 없습니다."));
-        ProjectsConverter.updateEntityFromDTO(project, dto);
+        project.updateFromDto(dto);
         projectsRepository.save(project);
         return ResponseEntity.ok(Map.of("msg", "프로젝트 수정이 완료되었습니다."));
     }
