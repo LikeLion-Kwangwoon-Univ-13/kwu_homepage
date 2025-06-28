@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface RecruitRepository extends JpaRepository<Recruit, Integer> {
+public interface RecruitRepository extends JpaRepository<Recruit, Long> {
     Optional<Recruit> findFirstByOrderByIdAsc();
 }

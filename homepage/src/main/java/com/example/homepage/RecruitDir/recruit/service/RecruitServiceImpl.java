@@ -42,7 +42,7 @@ public class RecruitServiceImpl implements RecruitService {
     }
 
     @Override
-    public void updateRecruit(Integer id, RecruitRequestDTO dto) {
+    public void updateRecruit(Long id, RecruitRequestDTO dto) {
         Recruit recruit = recruitRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 모집 일정이 존재하지 않습니다."));
         recruit.update(dto);

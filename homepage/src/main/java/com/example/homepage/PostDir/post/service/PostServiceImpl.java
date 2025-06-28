@@ -28,8 +28,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseListDTO getHome(){
-        List<Post> bestPosts = postRepository.findTop4ByIsBestOrderById(1);
-        List<Post> notBestPosts = postRepository.findTop5ByIsBestOrderById(0);
+        List<Post> bestPosts = postRepository.findTop4ByIsBestOrderByCreatedAtDesc(true);
+        List<Post> notBestPosts = postRepository.findTop5ByOrderByCreatedAtDesc();
         return new PostResponseListDTO(
                 toResponseDTO(bestPosts),
                 toResponseDTO(notBestPosts)
@@ -38,12 +38,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseListDTO getCursor(int cursor, int limit) {
-        Pageable pageable = PageRequest.of(cursor, limit, Sort.by("id").descending());
+        Pageable pageable = PageRequest.of(cursor, limit, Sort.by("createdAt").descending());
         List<Post> posts = postRepository.findAll(pageable).getContent();
-
-        if (posts.isEmpty()) {
-            throw new EntityNotFoundException("게시물이 없습니다.");
-        }
 
         return new PostResponseListDTO(toResponseDTO(posts));
     }
@@ -58,15 +54,15 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void updatePost(Integer id, PostRequestDTO postRequestDTO) {
+    public void updatePost(Long id, PostRequestDTO postRequestDTO) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
 
         if (postRequestDTO.getTitle() != null)
             post.updateTitle(postRequestDTO.getTitle());
 
-        if (postRequestDTO.getContents() != null)
-            post.updateContent(postRequestDTO.getContents());
+        if (postRequestDTO.getContent() != null)
+            post.updateContent(postRequestDTO.getContent());
 
         if (postRequestDTO.getUrl() != null)
             post.updateUrl(postRequestDTO.getUrl());
@@ -78,11 +74,37 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(Integer id) {
+    public void deletePost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
 
         postRepository.delete(post);
+    }
+
+    @Override
+    public void setPostBest(Long id){
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        if (post.getIsBest()) {
+            throw new IllegalStateException("이미 베스트 게시글입니다.");
+        }
+
+        post.updateIsBest(true);
+        postRepository.save(post);
+    }
+
+    @Override
+    public void cancelPostBest(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        if (!post.getIsBest()) {
+            throw new IllegalStateException("이미 베스트 게시글이 아닙니다.");
+        }
+
+        post.updateIsBest(false);
+        postRepository.save(post);
     }
 
     public List<PostResponseDTO> toResponseDTO(List<Post> posts){

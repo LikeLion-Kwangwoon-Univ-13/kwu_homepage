@@ -38,7 +38,7 @@ public class  RecruitController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateRecruit(@PathVariable("id") Integer id, @RequestBody RecruitRequestDTO dto) {
+    public ResponseEntity<?> updateRecruit(@PathVariable("id") Long id, @RequestBody RecruitRequestDTO dto) {
         try {
             recruitService.updateRecruit(id, dto);
             return ResponseEntity.ok().body("모집 일정이 수정되었습니다.");

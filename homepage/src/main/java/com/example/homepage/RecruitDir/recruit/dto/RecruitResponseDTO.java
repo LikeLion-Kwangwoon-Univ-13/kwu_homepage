@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class RecruitResponseDTO {
-    private Integer id;
+    private Long id;
     private String url;
     private LocalDate documentDate;
     private LocalDate candidateDate;

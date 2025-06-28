@@ -21,7 +21,7 @@ public class Recruit {
     // 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     // 구글폼 URL
     private String url;
     // 서류 모집

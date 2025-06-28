@@ -9,7 +9,7 @@ import com.example.homepage.MemberDir.projectmembers.repository.ProjectMembersRe
 import com.example.homepage.ProjectDir.projects.converter.ProjectsConverter;
 import com.example.homepage.ProjectDir.projects.dto.*;
 import com.example.homepage.ProjectDir.projects.repository.ProjectsRepository;
-import com.example.homepage.projects.dto.*;
+import com.example.homepage.ProjectDir.projects.dto.*;
 import com.example.homepage.ProjectDir.projects.entity.Projects;
 import com.example.homepage.ProjectDir.projectstacks.entity.ProjectStacks;
 import com.example.homepage.ProjectDir.projectstacks.repository.ProjectStacksRepository;

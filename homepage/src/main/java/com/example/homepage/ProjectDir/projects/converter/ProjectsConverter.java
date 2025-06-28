@@ -1,7 +1,7 @@
 package com.example.homepage.ProjectDir.projects.converter;
 
 import com.example.homepage.ProjectDir.projects.dto.*;
-import com.example.homepage.projects.dto.*;
+import com.example.homepage.ProjectDir.projects.dto.*;
 import com.example.homepage.ProjectDir.projects.entity.Projects;
 
 import java.util.List;

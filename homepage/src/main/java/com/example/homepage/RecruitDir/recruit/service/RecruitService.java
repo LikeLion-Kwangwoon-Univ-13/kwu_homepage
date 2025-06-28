@@ -6,5 +6,5 @@ import com.example.homepage.RecruitDir.recruit.dto.RecruitResponseDTO;
 public interface RecruitService {
     RecruitResponseDTO getRecruit();             // GET /api/recruit
     void createRecruit(RecruitRequestDTO dto);   // POST
-    void updateRecruit(Integer id, RecruitRequestDTO dto); // PATCH
+    void updateRecruit(Long id, RecruitRequestDTO dto); // PATCH
 }
