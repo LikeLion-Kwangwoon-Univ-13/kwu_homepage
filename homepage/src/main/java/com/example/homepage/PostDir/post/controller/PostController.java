@@ -58,7 +58,7 @@ public class PostController {
     @PatchMapping(value = "/manage/posts/newpost/{id}")
     public ResponseEntity<?> updatePost(
             @RequestBody PostRequestDTO postRequestDTO,
-            @PathVariable Integer id
+            @PathVariable Long id
     ){
         try{
             postService.updatePost(id, postRequestDTO);
@@ -71,7 +71,7 @@ public class PostController {
 
     @DeleteMapping(value = "/manage/posts/{id}/delete")
     public ResponseEntity<?> deletePost(
-            @PathVariable Integer id
+            @PathVariable Long id
     ){
         try{
             postService.deletePost(id);
@@ -84,7 +84,7 @@ public class PostController {
 
     @PatchMapping(value = "/manage/posts/{id}/setBest")
     public ResponseEntity<?> setBestPost(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @RequestBody Map<String, String> info
     ){
         try{
@@ -101,7 +101,7 @@ public class PostController {
 
     @PatchMapping(value = "/manage/posts/{id}/cancelBest")
     public ResponseEntity<?> cancelBestPost(
-            @PathVariable Integer id,
+            @PathVariable Long id,
             @RequestBody Map<String, String> info
     ){
         try{

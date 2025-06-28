@@ -18,9 +18,9 @@ public class Post {
     // 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     // 우수작인지
-    private Integer isBest = 0;
+    private Boolean isBest = false;
     // 제목
     private String title;
     // 세부 내용
@@ -30,7 +30,7 @@ public class Post {
     // 썸네일
     private String thumbnail;
     // 삭제 여부
-    private Integer isDeleted = 0;
+    private Boolean isDeleted = false;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostTag> postTags = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Post {
         this.thumbnail = thumbnail;
     }
 
-    public void updateIsBest(Integer isBest) { this.isBest = isBest; }
+    public void updateIsBest(Boolean isBest) { this.isBest = isBest; }
 
     @Builder
     public Post(String title, String content, String url, String thumbnail) {

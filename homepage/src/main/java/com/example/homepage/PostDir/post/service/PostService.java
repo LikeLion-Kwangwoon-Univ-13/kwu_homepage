@@ -7,8 +7,8 @@ public interface PostService {
     PostResponseListDTO getHome();
     PostResponseListDTO getCursor(int cursor, int limit);
     void createPost(PostRequestDTO postRequestDTO);
-    void updatePost(Integer id, PostRequestDTO postRequestDTO);
-    void deletePost(Integer id);
-    void setPostBest(Integer id, String username, String password);
-    void cancelPostBest(Integer id, String username, String password);
+    void updatePost(Long id, PostRequestDTO postRequestDTO);
+    void deletePost(Long id);
+    void setPostBest(Long id, String username, String password);
+    void cancelPostBest(Long id, String username, String password);
 }

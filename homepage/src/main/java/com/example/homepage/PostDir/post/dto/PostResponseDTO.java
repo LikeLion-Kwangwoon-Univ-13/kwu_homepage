@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class PostResponseDTO {
-    private Integer id;
+    private Long id;
     private String title;
     private String contents;
     private String url;

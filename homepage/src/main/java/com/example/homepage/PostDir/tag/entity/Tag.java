@@ -18,7 +18,7 @@ public class Tag {
     // 아이디
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     // 태그 이름
     private String name;
 
