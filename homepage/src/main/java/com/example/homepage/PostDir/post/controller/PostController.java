@@ -30,8 +30,8 @@ public class PostController {
 
     @GetMapping(value = "/blog/posts")
     public ResponseEntity<?> getCursorPosts(
-            @RequestParam int cursor,
-            @RequestParam int limit
+            @RequestParam("cursor") int cursor,
+            @RequestParam("limit") int limit
     ){
         try{
             PostResponseListDTO response = postService.getCursor(cursor, limit);
@@ -58,7 +58,7 @@ public class PostController {
     @PatchMapping(value = "/manage/posts/newpost/{id}")
     public ResponseEntity<?> updatePost(
             @RequestBody PostRequestDTO postRequestDTO,
-            @PathVariable Long id
+            @PathVariable("id") Long id
     ){
         try{
             postService.updatePost(id, postRequestDTO);
@@ -71,7 +71,7 @@ public class PostController {
 
     @DeleteMapping(value = "/manage/posts/{id}/delete")
     public ResponseEntity<?> deletePost(
-            @PathVariable Long id
+            @PathVariable("id") Long id
     ){
         try{
             postService.deletePost(id);
@@ -83,33 +83,31 @@ public class PostController {
     }
 
     @PatchMapping(value = "/manage/posts/{id}/setBest")
-    public ResponseEntity<?> setBestPost(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> info
-    ){
+    public ResponseEntity<?> setBestPost(@PathVariable("id") Long id){
         try{
-            String username = info.get("username");
-            String password = info.get("password");
-            
-            postService.setPostBest(id, username, password);
+            postService.setPostBest(id);
             return ResponseEntity.ok(Map.of("msg", "베스트 블로그 설정이 완료되었습니다."));
-        } catch (Exception e){
+        }
+        catch(IllegalStateException e){
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "이미 베스트 게시글입니다."));
+        }
+        catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "해당 정보를 찾을 수 없습니다."));
         }
     }
 
     @PatchMapping(value = "/manage/posts/{id}/cancelBest")
-    public ResponseEntity<?> cancelBestPost(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> info
-    ){
+    public ResponseEntity<?> cancelBestPost(@PathVariable("id") Long id){
         try{
-            String username = info.get("username");
-            String password = info.get("password");
-
-            postService.cancelPostBest(id, username, password);
+            postService.cancelPostBest(id);
             return ResponseEntity.ok(Map.of("msg", "베스트 블로그 해제가 완료되었습니다."));
+        } catch(IllegalStateException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", "이미 베스트 게시글이 아닙니다."));
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "해당 정보를 찾을 수 없습니다."));

@@ -12,7 +12,7 @@ public class PostRequestDtoToPostConverter implements Converter<PostRequestDTO, 
     public Post convert(PostRequestDTO source) {
         return Post.builder()
                 .title(source.getTitle())
-                .content(source.getContents())
+                .content(source.getContent())
                 .url(source.getUrl())
                 .thumbnail(source.getThumbnail())
                 .build();

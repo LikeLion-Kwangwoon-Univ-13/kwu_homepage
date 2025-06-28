@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // 우수작인지
-    private Boolean isBest = false;
+    private Boolean isBest;
     // 제목
     private String title;
     // 세부 내용
@@ -29,10 +31,15 @@ public class Post {
     private String url;
     // 썸네일
     private String thumbnail;
+    // 작성 시간
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
     // 삭제 여부
-    private Boolean isDeleted = false;
+    private Boolean isDeleted;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostTag> postTags = new ArrayList<>();
 
     public void updateTitle(String title) {
@@ -59,5 +66,20 @@ public class Post {
         this.content = content;
         this.url = url;
         this.thumbnail = thumbnail;
+
+        // 초기화
+        this.isBest = false;
+        this.isDeleted = false;
+    }
+
+    // 연관관계 메서드
+    public void addPostTag(PostTag postTag) {
+        postTags.add(postTag);
+        postTag.setPost(this);
+    }
+
+    public void removePostTag(PostTag postTag) {
+        postTags.remove(postTag);
+        postTag.setPost(null);
     }
 }

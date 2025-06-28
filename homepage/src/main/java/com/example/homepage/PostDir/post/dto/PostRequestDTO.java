@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 public class PostRequestDTO {
     private String title;
-    private String contents;
+    private String content;
     private String url;
     private String thumbnail;
     private List<String> tags;

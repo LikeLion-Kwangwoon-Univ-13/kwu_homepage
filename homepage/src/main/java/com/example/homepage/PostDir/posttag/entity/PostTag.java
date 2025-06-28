@@ -17,17 +17,26 @@ public class PostTag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tag_id")
     private Tag tag;
 
     @Builder
     public PostTag(Post post, Tag tag) {
         this.post = post;
+        this.tag = tag;
+    }
+
+    // 연관 관계 편의 메서드
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public void setTag(Tag tag) {
         this.tag = tag;
     }
 }

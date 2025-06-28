@@ -28,8 +28,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseListDTO getHome(){
-        List<Post> bestPosts = postRepository.findTop4ByIsBestOrderById(true);
-        List<Post> notBestPosts = postRepository.findTop5ByIsBestOrderById(false);
+        List<Post> bestPosts = postRepository.findTop4ByIsBestOrderByCreatedAtDesc(true);
+        List<Post> notBestPosts = postRepository.findTop5ByOrderByCreatedAtDesc();
         return new PostResponseListDTO(
                 toResponseDTO(bestPosts),
                 toResponseDTO(notBestPosts)
@@ -38,12 +38,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostResponseListDTO getCursor(int cursor, int limit) {
-        Pageable pageable = PageRequest.of(cursor, limit, Sort.by("id"));
+        Pageable pageable = PageRequest.of(cursor, limit, Sort.by("createdAt").descending());
         List<Post> posts = postRepository.findAll(pageable).getContent();
-
-        if (posts.isEmpty()) {
-            throw new EntityNotFoundException("게시물이 없습니다.");
-        }
 
         return new PostResponseListDTO(toResponseDTO(posts));
     }
@@ -65,8 +61,8 @@ public class PostServiceImpl implements PostService {
         if (postRequestDTO.getTitle() != null)
             post.updateTitle(postRequestDTO.getTitle());
 
-        if (postRequestDTO.getContents() != null)
-            post.updateContent(postRequestDTO.getContents());
+        if (postRequestDTO.getContent() != null)
+            post.updateContent(postRequestDTO.getContent());
 
         if (postRequestDTO.getUrl() != null)
             post.updateUrl(postRequestDTO.getUrl());
@@ -86,10 +82,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void setPostBest(Long id, String username, String password) {
-        if (!"admin".equals(username) || !"admin".equals(password)) {
-            throw new IllegalArgumentException("인증 실패");
-        }
+    public void setPostBest(Long id){
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
 
@@ -102,10 +95,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void cancelPostBest(Long id, String username, String password) {
-        if (!"admin".equals(username) || !"admin".equals(password)) {
-            throw new IllegalArgumentException("인증 실패");
-        }
+    public void cancelPostBest(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
 
