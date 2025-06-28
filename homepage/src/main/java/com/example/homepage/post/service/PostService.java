@@ -9,4 +9,6 @@ public interface PostService {
     void createPost(PostRequestDTO postRequestDTO);
     void updatePost(Integer id, PostRequestDTO postRequestDTO);
     void deletePost(Integer id);
+    void setPostBest(Integer id, String username, String password);
+    void cancelPostBest(Integer id, String username, String password);
 }

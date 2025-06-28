@@ -51,6 +51,8 @@ public class Post {
         this.thumbnail = thumbnail;
     }
 
+    public void updateIsBest(Integer isBest) { this.isBest = isBest; }
+
     @Builder
     public Post(String title, String content, String url, String thumbnail) {
         this.title = title;

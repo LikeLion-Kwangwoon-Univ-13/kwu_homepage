@@ -83,4 +83,38 @@ public class PostController {
                     .body(Map.of("error", "해당 정보를 찾을 수 없습니다."));
         }
     }
+
+    @PatchMapping(value = "/manage/posts/{id}/setBest")
+    public ResponseEntity<?> setBestPost(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> info
+    ){
+        try{
+            String username = info.get("username");
+            String password = info.get("password");
+            
+            postService.setPostBest(id, username, password);
+            return ResponseEntity.ok(Map.of("msg", "베스트 블로그 설정이 완료되었습니다."));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "해당 정보를 찾을 수 없습니다."));
+        }
+    }
+
+    @PatchMapping(value = "/manage/posts/{id}/cancelBest")
+    public ResponseEntity<?> cancelBestPost(
+            @PathVariable Integer id,
+            @RequestBody Map<String, String> info
+    ){
+        try{
+            String username = info.get("username");
+            String password = info.get("password");
+
+            postService.cancelPostBest(id, username, password);
+            return ResponseEntity.ok(Map.of("msg", "베스트 블로그 해제가 완료되었습니다."));
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "해당 정보를 찾을 수 없습니다."));
+        }
+    }
 }

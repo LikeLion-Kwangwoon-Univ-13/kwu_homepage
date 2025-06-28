@@ -87,6 +87,38 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
+    @Override
+    public void setPostBest(Integer id, String username, String password) {
+        if (!"admin".equals(username) || !"admin".equals(password)) {
+            throw new IllegalArgumentException("인증 실패");
+        }
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        if (post.getIsBest() == 1) {
+            throw new IllegalStateException("이미 베스트 게시글입니다.");
+        }
+
+        post.updateIsBest(1);
+        postRepository.save(post);
+    }
+
+    @Override
+    public void cancelPostBest(Integer id, String username, String password) {
+        if (!"admin".equals(username) || !"admin".equals(password)) {
+            throw new IllegalArgumentException("인증 실패");
+        }
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("게시글을 찾을 수 없습니다."));
+
+        if (post.getIsBest() == 0) {
+            throw new IllegalStateException("이미 베스트 게시글이 아닙니다.");
+        }
+
+        post.updateIsBest(0);
+        postRepository.save(post);
+    }
+
     public List<PostResponseDTO> toResponseDTO(List<Post> posts){
         return posts.stream()
                 .map(post -> new PostResponseDTO(
