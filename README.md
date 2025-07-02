@@ -1,2 +1,0 @@
-# kwu_homepage
-### DONGHO
