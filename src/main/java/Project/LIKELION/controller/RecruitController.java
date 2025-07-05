@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class RecruitController {
     private final RecruitService recruitService;
 
-
-
     @GetMapping
     public ResponseEntity<RecruitDTO> getRecruit() {
         RecruitDTO dto = recruitService.getRecruit();

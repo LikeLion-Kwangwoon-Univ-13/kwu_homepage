@@ -1,95 +1,117 @@
 package Project.LIKELION.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import Project.LIKELION.Repository.PostRepository; //DB 접근용
-import Project.LIKELION.DTO.POST.PostDTO; //반환할 DTO 객체
+import org.springframework.transaction.annotation.Transactional;
+import Project.LIKELION.Repository.PostRepository;
+import Project.LIKELION.Repository.TagRepository;
+import Project.LIKELION.DTO.POST.PostDTO;
+import Project.LIKELION.DTO.POST.TagDTO;
+import Project.LIKELION.Entity.POST.PostEntity;
+import Project.LIKELION.Entity.POST.TagEntity;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
-
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PostService {
+
     private final PostRepository postRepository;
+    private final TagRepository tagRepository;
 
-    public PostDTO getPostById(Integer id) { //ID로 조회 API 필요하니까 ById
+    private PostDTO mapToDto(PostEntity e) {
+        List<TagDTO> tagDtos = e.getTags().stream()
+                .map(t -> TagDTO.builder()
+                        .id(t.getId())
+                        .name(t.getName())
+                        .build())
+                .collect(Collectors.toList());
+
+        return PostDTO.builder()
+                .id(e.getId())
+                .isBest(e.getIsBest())
+                .title(e.getTitle())
+                .content(e.getContent())
+                .url(e.getUrl())
+                .thumbnail(e.getThumbnail())
+                .isDeleted(e.getIsDeleted())
+                .tags(tagDtos)
+                .build();
+    }
+
+    @Transactional(readOnly = true)
+    public PostDTO getPostById(Integer id) {
         return postRepository.findById(id)
-                .map(entity -> PostDTO.builder()
-                        .id(entity.getId())
-                        .isBest(entity.getIsBest()) //엥시발??
-                        .title(entity.getTitle())
-                        .content(entity.getContent())
-                        .url(entity.getUrl())
-                        .thumbnail(entity.getThumbnail())
-                        .isDeleted(entity.getIsDeleted())
-                        //서비스에서 리스트 매핑 방법
-//                        .List(entity.getTags)<>()
-                        //아 서비스에서 리스트 매핑하는 방법을 모르겠음;;
-                        //도저히 찾아봐도 안 나옴
-                        .build())
-
-                .orElseThrow(()-> new RuntimeException("Post Not Found"));
-
-
+                .map(this::mapToDto)
+                .orElseThrow(() -> new RuntimeException("Post Not Found: " + id));
     }
 
-
+    @Transactional
     public PostDTO createPost(PostDTO dto) {
-        return postRepository.findById(dto.getId())
-                .map(entity -> PostDTO.builder()
-                        .id(entity.getId())
-                        .isBest(entity.getIsBest()) //엥시발??
-                        .title(entity.getTitle())
-                        .content(entity.getContent())
-                        .url(entity.getUrl())
-                        .thumbnail(entity.getThumbnail())
-                        .isDeleted(entity.getIsDeleted())
-                        //서비스에서 리스트 매핑 방법
-//                        .List(entity.getTags)<>()
-                        //아 서비스에서 리스트 매핑하는 방법을 모르겠음;;
-                        //도저히 찾아봐도 안 나옴
-                        .build())
+        PostEntity p = PostEntity.builder()
+                .isBest(dto.getIsBest())
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .url(dto.getUrl())
+                .thumbnail(dto.getThumbnail())
+                .isDeleted(dto.getIsDeleted())
+                .build();
 
-                .orElseThrow(()-> new RuntimeException("Post Not Found"));
+        // 태그 처리 기능. id가 있으면 로드, 없으면 생성
+        List<TagEntity> tags = dto.getTags().stream()
+                .map(tagDto -> {
+                    if (tagDto.getId() != null) {
+                        return tagRepository.findById(tagDto.getId())
+                                .orElseThrow(() -> new RuntimeException("Tag Not Found: " + tagDto.getId()));
+                    } else {
+                        TagEntity newTag = TagEntity.builder()
+                                .name(tagDto.getName())
+                                .build();
+                        return tagRepository.save(newTag);
+                    }
+                })
+                .collect(Collectors.toList());
+
+        // 직접 컬렉션에 추가
+        p.getTags().addAll(tags);
+
+        PostEntity saved = postRepository.save(p);
+        return mapToDto(saved);
     }
 
+    @Transactional
     public PostDTO updatePost(PostDTO dto) {
-        return postRepository.findById(dto.getId())
-                .map(entity -> PostDTO.builder()
-                        .id(entity.getId())
-                        .isBest(entity.getIsBest()) //엥시발??
-                        .title(entity.getTitle())
-                        .content(entity.getContent())
-                        .url(entity.getUrl())
-                        .thumbnail(entity.getThumbnail())
-                        .isDeleted(entity.getIsDeleted())
-                        //서비스에서 리스트 매핑 방법
-//                        .List(entity.getTags)<>()
-                        //아 서비스에서 리스트 매핑하는 방법을 모르겠음;;
-                        //도저히 찾아봐도 안 나옴
-                        .build())
+        PostEntity p = postRepository.findById(dto.getId())
+                .orElseThrow(() -> new RuntimeException("Post Not Found: " + dto.getId()));
 
-                .orElseThrow(()-> new RuntimeException("Post Not Found"));
+        // 태그 업데이트: 기존 모두 삭제 후 재등록하도록 함.
+        p.getTags().clear();
+        List<TagEntity> tags = dto.getTags().stream()
+                .map(tagDto -> {
+                    if (tagDto.getId() != null) {
+                        return tagRepository.findById(tagDto.getId())
+                                .orElseThrow(() -> new RuntimeException("Tag Not Found: " + tagDto.getId()));
+                    } else {
+                        TagEntity newTag = TagEntity.builder()
+                                .name(tagDto.getName())
+                                .build();
+                        return tagRepository.save(newTag);
+                    }
+                })
+                .collect(Collectors.toList());
+        p.getTags().addAll(tags);
+
+        PostEntity updated = postRepository.save(p);
+        return mapToDto(updated);
     }
-public PostDTO deletePost(Integer id) {
-    return postRepository.findById(id)
-            .map(entity -> PostDTO.builder()
-                    .id(entity.getId())
-                    .isBest(entity.getIsBest()) //엥시발??
-                    .title(entity.getTitle())
-                    .content(entity.getContent())
-                    .url(entity.getUrl())
-                    .thumbnail(entity.getThumbnail())
-                    .isDeleted(entity.getIsDeleted())
-                    //서비스에서 리스트 매핑 방법
-//                        .List(entity.getTags)<>()
-                    //아 서비스에서 리스트 매핑하는 방법을 모르겠음;;
-                    //도저히 찾아봐도 안 나옴
-                    .build())
 
-            .orElseThrow(()-> new RuntimeException("Post Not Found"));
+    @Transactional
+    public PostDTO deletePost(Integer id) {
+        PostEntity p = postRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Post Not Found: " + id));
 
-
-}
+        PostEntity deleted = postRepository.save(p);
+        return mapToDto(deleted);
+    }
 }
