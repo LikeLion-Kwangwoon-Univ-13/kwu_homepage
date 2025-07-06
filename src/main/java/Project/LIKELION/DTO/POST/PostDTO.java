@@ -16,5 +16,6 @@ public class PostDTO {
     private String url;       // url
     private String thumbnail;       //썸네일
     private Integer isDeleted;        //삭제여부
-    private List<TagDTO> tags;
+    private List<TagDTO> tags;       //태그 dto 매핑
+
 }

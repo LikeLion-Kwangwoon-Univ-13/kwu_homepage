@@ -3,24 +3,22 @@ package Project.LIKELION.Entity.POST;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Tag")
+@Table(name = "tag")
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 
 public class TagEntity {
     @Id
-    @Column(name = "project_id")
-    private Integer project_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-    @Column(columnDefinition = "VARCHAR", nullable = false)
+    @Column(name = "name", length = 255, nullable = false)
     private String name; //구글폼
-
-    @ManyToOne
-    @JoinColumn(name = "post_id")
-    private PostEntity post;
 }
