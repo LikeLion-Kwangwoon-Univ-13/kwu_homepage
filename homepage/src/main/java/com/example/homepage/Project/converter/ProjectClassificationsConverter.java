@@ -3,11 +3,11 @@ package com.example.homepage.Project.converter;
 import com.example.homepage.Project.dto.ProjectClassificationsRequestDTO;
 import com.example.homepage.Project.dto.ProjectClassificationsResponseDTO;
 import com.example.homepage.Project.entity.ProjectClassifications;
-import com.example.homepage.Project.entity.Classifications;
-import com.example.homepage.Project.entity.Projects;
+import com.example.homepage.Project.entity.Classification;
+import com.example.homepage.Project.entity.Project;
 
 public class ProjectClassificationsConverter {
-    public static ProjectClassifications toEntity(ProjectClassificationsRequestDTO dto, Projects project, Classifications classification) {
+    public static ProjectClassifications toEntity(ProjectClassificationsRequestDTO dto, Project project, Classification classification) {
         return ProjectClassifications.builder()
                 .project(project)
                 .classification(classification)

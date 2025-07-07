@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Classifications {
+public class Classification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

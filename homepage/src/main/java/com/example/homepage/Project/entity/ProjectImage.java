@@ -19,7 +19,7 @@ public class ProjectImage {
     private String url;
     private int orderIndex;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private Projects project;
+    private Project project;
 }

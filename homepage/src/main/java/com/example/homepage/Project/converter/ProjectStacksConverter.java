@@ -1,13 +1,13 @@
 package com.example.homepage.Project.converter;
 
-import com.example.homepage.Project.entity.Projects;
+import com.example.homepage.Project.entity.Project;
 import com.example.homepage.Project.dto.ProjectStacksRequestDTO;
 import com.example.homepage.Project.dto.ProjectStacksResponseDTO;
 import com.example.homepage.Project.entity.ProjectStacks;
 import com.example.homepage.Member.entity.Stack;
 
 public class ProjectStacksConverter {
-    public static ProjectStacks toEntity(ProjectStacksRequestDTO dto, Projects project, Stack stack) {
+    public static ProjectStacks toEntity(ProjectStacksRequestDTO dto, Project project, Stack stack) {
         return ProjectStacks.builder()
                 .project(project)
                 .stack(stack)

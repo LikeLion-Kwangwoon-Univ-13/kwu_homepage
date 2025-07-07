@@ -4,10 +4,10 @@ import com.example.homepage.Member.entity.Member;
 import com.example.homepage.Member.dto.ProjectMembersRequestDTO;
 import com.example.homepage.Member.dto.ProjectMembersResponseDTO;
 import com.example.homepage.Member.entity.ProjectMembers;
-import com.example.homepage.Project.entity.Projects;
+import com.example.homepage.Project.entity.Project;
 
 public class ProjectMembersConverter {
-    public static ProjectMembers toEntity(ProjectMembersRequestDTO dto, Projects project, Member member) {
+    public static ProjectMembers toEntity(ProjectMembersRequestDTO dto, Project project, Member member) {
         return ProjectMembers.builder()
                 .project(project)
                 .member(member)

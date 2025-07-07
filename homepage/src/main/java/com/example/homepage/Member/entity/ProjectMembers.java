@@ -1,6 +1,6 @@
 package com.example.homepage.Member.entity;
 
-import com.example.homepage.Project.entity.Projects;
+import com.example.homepage.Project.entity.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +19,7 @@ public class ProjectMembers {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "project_id")
-    private Projects project;
+    private Project project;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

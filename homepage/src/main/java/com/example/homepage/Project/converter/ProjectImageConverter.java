@@ -3,10 +3,10 @@ package com.example.homepage.Project.converter;
 import com.example.homepage.Project.dto.ProjectImageRequestDTO;
 import com.example.homepage.Project.dto.ProjectImageResponseDTO;
 import com.example.homepage.Project.entity.ProjectImage;
-import com.example.homepage.Project.entity.Projects;
+import com.example.homepage.Project.entity.Project;
 
 public class ProjectImageConverter {
-    public static ProjectImage toEntity(ProjectImageRequestDTO dto, Projects project) {
+    public static ProjectImage toEntity(ProjectImageRequestDTO dto, Project project) {
         return ProjectImage.builder()
                 .url(dto.getUrl())
                 .orderIndex(dto.getOrderIndex())

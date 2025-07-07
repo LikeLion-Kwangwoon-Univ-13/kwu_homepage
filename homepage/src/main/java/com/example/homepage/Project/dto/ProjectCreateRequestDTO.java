@@ -18,10 +18,10 @@ public class ProjectCreateRequestDTO {
     private String line_introduction;
     private String url;
     private String introduction;
-    private Map<String, String> project_member;
+    private List<String> projectMember;
     private List<String> stacks;
     private String part;
     private int generation;
-    private LocalDate start_Date;
-    private LocalDate end_Date;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }
