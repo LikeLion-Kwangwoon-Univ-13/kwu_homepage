@@ -1,6 +1,6 @@
 package com.example.homepage.Project.entity;
 
-import com.example.homepage.Member.entity.Stacks;
+import com.example.homepage.Member.entity.Stack;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,5 +23,5 @@ public class ProjectStacks {
 
     @ManyToOne
     @JoinColumn(name = "stack_id")
-    private Stacks stack;
+    private Stack stack;
 }

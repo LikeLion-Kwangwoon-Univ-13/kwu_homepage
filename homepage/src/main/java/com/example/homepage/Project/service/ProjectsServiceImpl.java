@@ -1,7 +1,7 @@
 package com.example.homepage.Project.service;
 
-import com.example.homepage.Member.entity.Members;
-import com.example.homepage.Member.repository.MembersRepository;
+import com.example.homepage.Member.entity.Member;
+import com.example.homepage.Member.repository.MemberRepository;
 import com.example.homepage.Project.dto.*;
 import com.example.homepage.Project.entity.ProjectImage;
 import com.example.homepage.Project.repository.ProjectImageRepository;
@@ -12,7 +12,7 @@ import com.example.homepage.Project.repository.ProjectsRepository;
 import com.example.homepage.Project.entity.Projects;
 import com.example.homepage.Project.entity.ProjectStacks;
 import com.example.homepage.Project.repository.ProjectStacksRepository;
-import com.example.homepage.Member.entity.Stacks;
+import com.example.homepage.Member.entity.Stack;
 import com.example.homepage.Member.repository.StacksRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,7 @@ public class ProjectsServiceImpl implements ProjectsService {
     private final ProjectMembersRepository projectMembersRepository;
     private final ProjectStacksRepository projectStacksRepository;
     private final StacksRepository stacksRepository;
-    private final MembersRepository membersRepository;
+    private final MemberRepository memberRepository;
     private final ProjectImageRepository projectImageRepository;
 
     @Override
@@ -81,7 +81,7 @@ public class ProjectsServiceImpl implements ProjectsService {
                 .build());
 
         dto.getProject_member().forEach((name, position) -> {
-            Members member = membersRepository.findByName(name)
+            Member member = memberRepository.findByName(name)
                     .orElseThrow(() -> new EntityNotFoundException("멤버를 찾을 수 없습니다."));
             projectMembersRepository.save(ProjectMembers.builder()
                     .member(member)
@@ -90,8 +90,8 @@ public class ProjectsServiceImpl implements ProjectsService {
         });
 
         for (String name : dto.getStacks()) {
-            Stacks stack = stacksRepository.findByName(name)
-                    .orElseGet(() -> stacksRepository.save(Stacks.builder().name(name).build()));
+            Stack stack = stacksRepository.findByName(name)
+                    .orElseGet(() -> stacksRepository.save(Stack.builder().name(name).build()));
             projectStacksRepository.save(ProjectStacks.builder()
                     .stack(stack)
                     .project(saved)

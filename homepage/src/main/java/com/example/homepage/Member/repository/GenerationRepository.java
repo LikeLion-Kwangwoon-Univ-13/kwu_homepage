@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface GenerationRepository extends JpaRepository<Generation, Long> {
+    boolean existsByGeneration(int generation);
     Optional<Generation> findByGeneration(int generation);
+    Optional<Generation> findFirstByOrderByGenerationDesc();
 }

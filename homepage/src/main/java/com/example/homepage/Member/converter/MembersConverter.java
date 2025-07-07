@@ -3,14 +3,15 @@ package com.example.homepage.Member.converter;
 import com.example.homepage.Member.entity.Generation;
 import com.example.homepage.Member.dto.MemberCreateRequestDTO;
 import com.example.homepage.Member.dto.MemberWithStacksResponseDTO;
-import com.example.homepage.Member.entity.Members;
+import com.example.homepage.Member.entity.Member;
+import com.example.homepage.Member.repository.MemberStacksRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MembersConverter {
-    public static Members toEntity(MemberCreateRequestDTO dto, Generation generation) {
-        return Members.builder()
+    public static Member toEntity(MemberCreateRequestDTO dto, Generation generation) {
+        return Member.builder()
                 .generation(generation)
                 .profile(dto.getProfile())
                 .name(dto.getName())
@@ -21,11 +22,7 @@ public class MembersConverter {
                 .build();
     }
 
-    public static MemberWithStacksResponseDTO toDto(Members member) {
-        List<String> stacks = member.getMembersStacks().stream()
-                .map(ms -> ms.getStack().getName())
-                .collect(Collectors.toList());
-
+    public static MemberWithStacksResponseDTO toDto(Member member, List<String> stacks) {
         return MemberWithStacksResponseDTO.builder()
                 .id(member.getId())
                 .profile(member.getProfile())
