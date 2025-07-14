@@ -1,25 +1,25 @@
-package Project.LIKELION.Entity.POST;
+package Project.LIKELION.Entity.MEMBERS;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name = "tag")
+@Table(name = "Generation")
+@Builder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 
-public class TagEntity {
+public class GenerationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name", length = 255, nullable = false)
-    private String name; //구글폼
-
+    @Column(name = "generation")
+    private Integer generation;
 }
