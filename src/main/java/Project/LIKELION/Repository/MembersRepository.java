@@ -1,4 +1,4 @@
-package Project.LIKELION.Repository;
+package Project.LIKELION.Repository.MEMBERS;
 
 import Project.LIKELION.Entity.MEMBERS.MembersEntity;
 import org.springframework.data.jpa.repository.EntityGraph;

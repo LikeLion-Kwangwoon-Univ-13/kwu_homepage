@@ -30,7 +30,7 @@ public class MembersEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String profile; //프로필
 
-    @Column(columnDefinition = "VARCHAR", nullable = false)
+    @Column(nullable = false, length = 100)
     private String name; //이름
     private String position; //직위
     private String part; //파트

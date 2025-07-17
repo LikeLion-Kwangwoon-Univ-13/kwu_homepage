@@ -5,8 +5,6 @@ import lombok.*;
 
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 
 public class GenerationDTO {
     private Integer id; //아이디

@@ -34,8 +34,7 @@ public class PostEntity {
     @Column(name = "isDeleted")
     private int isDeleted;
 
-    //OneToMany로 수정하기 단방향 주의
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "post_tag",
             joinColumns = @JoinColumn(name = "post_id"),

@@ -13,10 +13,10 @@ import lombok.*;
 public class RecruitDTO {
     private int id;               // 아이디
     private String url;               // 구글폼 URL
-    private LocalDate applyDate;      // 서류 모집 날짜
-    private LocalDate announceDate;   // 합격자 발표 날짜
+    private LocalDate documentDate;      // 서류 모집 날짜
+    private LocalDate candidateDate;   // 합격자 발표 날짜
     private LocalDate interviewDate;  // 면접 날짜
-    private LocalDate passDate;       // 최종 합격 날짜
+    private LocalDate acceptDate;       // 최종 합격 날짜
     private LocalDate otDate;         // OT 날짜
 }
 

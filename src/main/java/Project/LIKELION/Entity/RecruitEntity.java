@@ -25,10 +25,10 @@ public class RecruitEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String url;
 
-    @Column(nullable = false)
-    private LocalDate applyDate;
-    private LocalDate announceDate;
+    @Column(nullable = true)
+    private LocalDate documentDate;
+    private LocalDate candidateDate;
     private LocalDate interviewDate;
-    private LocalDate passDate;
+    private LocalDate acceptDate;
     private LocalDate otDate;
 }

@@ -1,11 +1,9 @@
 package Project.LIKELION.Entity.MEMBERS;
 
 import jakarta.persistence.*;
-import lombok.*;
 import lombok.Getter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ public class StacksEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Column(columnDefinition = "VARCHAR", nullable = false)
+    @Column(nullable = false, length = 100)
     private String name;
 
     @OneToMany(mappedBy = "stack", cascade = CascadeType.ALL )

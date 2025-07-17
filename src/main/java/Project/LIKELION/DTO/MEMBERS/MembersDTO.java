@@ -2,11 +2,10 @@ package Project.LIKELION.DTO.MEMBERS;
 
 import lombok.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Builder
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
 
 public class MembersDTO {
     private Integer id; //아이디
@@ -18,4 +17,6 @@ public class MembersDTO {
     private String github; //깃허브
     private String instagram; //인스타그램
     private LocalDate created_at; //생성일자
+
+    private List<StackDTO> stacks;
 }
