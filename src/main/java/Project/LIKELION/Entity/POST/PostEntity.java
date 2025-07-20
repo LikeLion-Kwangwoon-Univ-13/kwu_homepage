@@ -5,16 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "post")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Builder
 
 public class PostEntity {
     @Id
@@ -23,26 +22,49 @@ public class PostEntity {
     private int id;
 
     @Column(name = "isbest")
-    private int isBest; //우수작인지 O/X true/false로
+    private boolean isBest; //우수작인지 O/X true/false로
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String title;
-    private String content;
-    private String url;
-    private String thumbnail;
+    private String title; //제목
+    private String content; //세부 내용
+    private String url; //url
+    private String thumbnail; //썸네일
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDate createdAt;
 
     @Column(name = "isDeleted")
-    private int isDeleted;
+    private boolean isDeleted; //삭제 여부
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-            name = "post_tag",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
-    )
-    private List<TagEntity> tags = new ArrayList<>();
-
-    public List<TagEntity> getTags() {
-        return tags;
+    //setter 대체 메서드.
+    public void updateIsBest(boolean isBest) {
+        this.isBest = isBest;
     }
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+    public void updateContent(String content) {
+        this.content = content;
+    }
+    public void updateUrl(String url) {
+        this.url = url;
+    }
+    public void updateThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+    public void updateDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+    @Builder
+    public PostEntity(Boolean isBest, Boolean isDeleted, Integer id,  String title, String content, String url, String thumbnail) {
+        this.isBest = isBest;
+//        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.url = url;
+        this.thumbnail = thumbnail;
+        this.isDeleted = isDeleted;
+    }
+
 }

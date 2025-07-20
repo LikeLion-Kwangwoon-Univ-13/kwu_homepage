@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import Project.LIKELION.DTO.RecruitDTO;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -31,4 +32,14 @@ public class RecruitEntity {
     private LocalDate interviewDate;
     private LocalDate acceptDate;
     private LocalDate otDate;
+
+    public void update(RecruitDTO dto) {
+        this.url = dto.getUrl();
+        this.documentDate = dto.getDocumentDate();
+        this.candidateDate = dto.getCandidateDate();
+        this.interviewDate = dto.getInterviewDate();
+        this.acceptDate = dto.getAcceptDate();
+        this.otDate = dto.getOtDate();
+    }
+
 }

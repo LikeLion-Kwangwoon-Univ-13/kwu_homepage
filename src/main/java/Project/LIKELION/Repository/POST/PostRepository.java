@@ -1,6 +1,5 @@
-package Project.LIKELION.Repository;
+package Project.LIKELION.Repository.POST;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import Project.LIKELION.Entity.POST.PostEntity;
@@ -11,10 +10,12 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer> {
 
-    @EntityGraph(attributePaths = "tags")
-    List<PostEntity> findAll();   // 모든 Post + Tag들을 한 번의 쿼리로 가져옴
+    List<PostEntity> findByIsBest(Boolean isBest);
 
-    @EntityGraph(attributePaths = "tags")
     Optional<PostEntity> findById(Integer id);
+
+    List<PostEntity> findTop4ByIsBestOrderByCreatedAtDesc(boolean isBest);
+
+    List<PostEntity> findTop5ByOrderByCreatedAtDesc();
 
 }

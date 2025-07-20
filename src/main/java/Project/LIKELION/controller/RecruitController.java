@@ -15,6 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/recruit")
 
+
 public class RecruitController {
     private final RecruitService recruitService;
 

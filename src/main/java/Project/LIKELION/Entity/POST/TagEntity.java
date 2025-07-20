@@ -6,12 +6,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "tag")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 
 public class TagEntity {
     @Id
@@ -22,4 +24,8 @@ public class TagEntity {
     @Column(name = "name", length = 255, nullable = false)
     private String name; //구글폼
 
+    @Builder
+    public TagEntity(String name){
+        this.name = name;
+    }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import Project.LIKELION.Repository.RecruitRepostory;
 import org.springframework.web.server.ResponseStatusException;
 
+//MapToDTO가 Conevrter랑 연결되는 애.
 @Service
 //@AllArgsConstructor //이거 말고 아래 어노테이션을 써야 하는 이유는 무엇
 @RequiredArgsConstructor
@@ -70,16 +71,6 @@ public class RecruitService {
         RecruitEntity existing = recruitRepository.findById(id)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 ID의 모집 일정이 존재하지 않습니다."));
 
-        RecruitEntity updated = RecruitEntity.builder()
-                .id(id)
-                .url(recruitDTO.getUrl())
-                .documentDate(recruitDTO.getDocumentDate())
-                .candidateDate(recruitDTO.getCandidateDate())
-                .interviewDate(recruitDTO.getInterviewDate())
-                .acceptDate(recruitDTO.getAcceptDate())
-                .otDate(recruitDTO.getOtDate())
-                .build();
-
-        recruitRepository.save(updated);
+        existing.update(recruitDTO);
     }
 }
